@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import IconArrow from '../resource/drawable/icon_arrow.png';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {Picker} from '@react-native-picker/picker';
 
 const HeaderBarRegister = () => {
   return (
@@ -53,6 +54,7 @@ const SignUpScreen = () => {
   const [mode, setMode] = React.useState('date');
   const [show, setShow] = React.useState(false);
 
+
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
@@ -67,6 +69,8 @@ const SignUpScreen = () => {
   const showDatepicker = () => {
     showMode('date');
   };
+
+  
 
   return (
     <SafeAreaView>
@@ -169,6 +173,18 @@ const SignUpScreen = () => {
               />
             )}
           </TouchableOpacity>
+          <View
+            style={[
+              styleRegisterScreen.boxPhoneNumber,
+              styleRegisterScreen.boxBorder,
+            ]}>
+            <TextInput />
+          </View>
+            <TouchableOpacity style={styleRegisterScreen.boxButtonRegister}>
+              <Text style={styleRegisterScreen.boxButtonRegisterContent}>
+                Register
+              </Text>
+            </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -251,7 +267,7 @@ const styleRegisterScreen = StyleSheet.create({
   boxSelectedDate: {
     height: 50,
     flexDirection: 'row',
-    marginHorizontal: '7%',
+    marginHorizontal: '5%',
     marginTop: margin10,
   },
   boxGetTimeSelectedDate: {
@@ -264,6 +280,20 @@ const styleRegisterScreen = StyleSheet.create({
     borderRadius: 10,
     marginHorizontal: 10,
   },
+  boxButtonRegister: {
+    height: 50,
+    margin: "10%",
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  boxButtonRegisterContent: {
+    backgroundColor: 'black',
+    borderRadius: 50,
+    paddingHorizontal: "10%",
+    paddingVertical: '5%',
+    color: 'white',
+    fontSize: 20,
+  }
 });
 
 export default SignUpScreen;
