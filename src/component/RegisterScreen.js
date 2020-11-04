@@ -9,10 +9,13 @@ import {
   TextInput,
   TouchableOpacity,
   Platform,
+  Alert
 } from 'react-native';
 import IconArrow from '../resource/drawable/icon_arrow.png';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {Picker} from '@react-native-picker/picker';
+import aixos from 'axios';
+import {useNavigation} from '@react-navigation/native';
 
 const HeaderBarRegister = () => {
   return (
@@ -49,27 +52,42 @@ const styleHeaderBar = StyleSheet.create({
 });
 
 const SignUpScreen = () => {
-  const [value, onChangeText] = React.useState('Useless Placeholder');
-  const [date, setDate] = React.useState(new Date(1598051730000));
-  const [mode, setMode] = React.useState('date');
-  const [show, setShow] = React.useState(false);
+  const navigation = useNavigation();
+  
+  const [state, setState] = React.useState({
+    'email': "",
+    'password': ""
+  })
 
+  const handleChange = (name, { nativeEvent: { eventCount, target, text} }) => {
+    setState(prevState => ({
+      ...prevState,
+      [name]: text
+    }))
+  }
 
-  const onChange = (event, selectedDate) => {
-    const currentDate = selectedDate || date;
-    setShow(Platform.OS === 'ios');
-    setDate(currentDate);
-  };
+  const doLogin = () => {
+    if (state.email.length > 0 && state.password.length > 0) {
+      const payload = {
+        "email": state.email,
+        "password": state.password
+      }
+      aixos.post('http://192.168.1.100:6969/api/v1/login', payload)
+        .then(response => {
+          if (response.status === 200) {
+            navigation.navigate("HomeScreen")
+          } else {
+            console.log("error")
+          }
+        }).catch(error => {
+          console.log(error)
+        })
+    }
+  }
 
-  const showMode = (currentMode) => {
-    setShow(true);
-    setMode(currentMode);
-  };
-
-  const showDatepicker = () => {
-    showMode('date');
-  };
-
+  const handleSubmitClick = (e) => {
+    doLogin()    
+  }
   
 
   return (
@@ -89,7 +107,9 @@ const SignUpScreen = () => {
               styleRegisterScreen.boxEmail,
               styleRegisterScreen.boxBorder,
             ]}>
-            <TextInput />
+            <TextInput
+              onChange={(event) => handleChange("email", event)}
+              value={state.email} />
           </View>
           <View
             style={[
@@ -97,8 +117,8 @@ const SignUpScreen = () => {
               styleRegisterScreen.boxBorder,
             ]}>
             <TextInput
-              onChangeText={(text) => onChangeText(text)}
-              value={value}
+              onChange={(event) => handleChange("password", event)}
+              value={state.password}
             />
           </View>
           <View
@@ -106,7 +126,7 @@ const SignUpScreen = () => {
               styleRegisterScreen.boxPassword,
               styleRegisterScreen.boxBorder,
             ]}>
-            <TextInput />
+            <Text>this is email {state.email} and pass {state.password}</Text>
           </View>
           <View style={styleRegisterScreen.boxLinearFullname}>
             <View style={[styleRegisterScreen.boxFirstName]}>
@@ -157,21 +177,12 @@ const SignUpScreen = () => {
           <TouchableOpacity
             style={styleRegisterScreen.boxSelectedDate}
             onPress={() => {
-              showDatepicker();
+              
             }}>
             <Text style={styleRegisterScreen.boxGetTimeSelectedDate}>1</Text>
             <Text style={styleRegisterScreen.boxGetTimeSelectedDate}>2</Text>
             <Text style={styleRegisterScreen.boxGetTimeSelectedDate}>3</Text>
-            {show && (
-              <DateTimePicker
-                testID="dateTimePicker"
-                value={date}
-                mode={mode}
-                is24Hour={true}
-                display="default"
-                onChange={onChange}
-              />
-            )}
+            
           </TouchableOpacity>
           <View
             style={[
@@ -180,7 +191,9 @@ const SignUpScreen = () => {
             ]}>
             <TextInput />
           </View>
-            <TouchableOpacity style={styleRegisterScreen.boxButtonRegister}>
+            <TouchableOpacity style={styleRegisterScreen.boxButtonRegister} onPress={() => {
+              navigation.navigate("HomeScreen")
+            }}>
               <Text style={styleRegisterScreen.boxButtonRegisterContent}>
                 Register
               </Text>

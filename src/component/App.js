@@ -4,13 +4,14 @@ import {createStackNavigator} from '@react-navigation/stack';
 import SplashScreen from './SplashScreen';
 import IntroScreen from './IntroScreen';
 import SignUpScreen from './RegisterScreen';
+import HomeScreen from './HomeScreen';
 
 const Stack = createStackNavigator();
 
 function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="SplashScreen">
+      <Stack.Navigator initialRouteName="HomeScreen">
         <Stack.Screen
           name="SplashScreen"
           options={{headerShown: false}}
@@ -25,6 +26,11 @@ function App() {
           name="SignUpScreen"
           options={{headerShown: false}}
           component={SignUpScreen}
+        />
+        <Stack.Screen
+          name="HomeScreen"
+          options={{headerShown: false}}
+          component={HomeScreen}
         />
       </Stack.Navigator>
     </NavigationContainer>
