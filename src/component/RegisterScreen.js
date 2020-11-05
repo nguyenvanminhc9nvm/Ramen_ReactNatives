@@ -9,7 +9,7 @@ import {
   TextInput,
   TouchableOpacity,
   Platform,
-  Alert
+  Alert,
 } from 'react-native';
 import IconArrow from '../resource/drawable/icon_arrow.png';
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -53,42 +53,43 @@ const styleHeaderBar = StyleSheet.create({
 
 const SignUpScreen = () => {
   const navigation = useNavigation();
-  
-  const [state, setState] = React.useState({
-    'email': "",
-    'password': ""
-  })
 
-  const handleChange = (name, { nativeEvent: { eventCount, target, text} }) => {
-    setState(prevState => ({
+  const [state, setState] = React.useState({
+    email: '',
+    password: '',
+  });
+
+  const handleChange = (name, {nativeEvent: {eventCount, target, text}}) => {
+    setState((prevState) => ({
       ...prevState,
-      [name]: text
-    }))
-  }
+      [name]: text,
+    }));
+  };
 
   const doLogin = () => {
     if (state.email.length > 0 && state.password.length > 0) {
       const payload = {
-        "email": state.email,
-        "password": state.password
-      }
-      aixos.post('http://192.168.1.100:6969/api/v1/login', payload)
-        .then(response => {
+        email: state.email,
+        password: state.password,
+      };
+      aixos
+        .post('http://192.168.1.100:6969/api/v1/login', payload)
+        .then((response) => {
           if (response.status === 200) {
-            navigation.navigate("HomeScreen")
+            navigation.navigate('HomeScreen');
           } else {
-            console.log("error")
+            console.log('error');
           }
-        }).catch(error => {
-          console.log(error)
         })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-  }
+  };
 
   const handleSubmitClick = (e) => {
-    doLogin()    
-  }
-  
+    doLogin();
+  };
 
   return (
     <SafeAreaView>
@@ -108,8 +109,9 @@ const SignUpScreen = () => {
               styleRegisterScreen.boxBorder,
             ]}>
             <TextInput
-              onChange={(event) => handleChange("email", event)}
-              value={state.email} />
+              onChange={(event) => handleChange('email', event)}
+              value={state.email}
+            />
           </View>
           <View
             style={[
@@ -117,7 +119,7 @@ const SignUpScreen = () => {
               styleRegisterScreen.boxBorder,
             ]}>
             <TextInput
-              onChange={(event) => handleChange("password", event)}
+              onChange={(event) => handleChange('password', event)}
               value={state.password}
             />
           </View>
@@ -126,7 +128,9 @@ const SignUpScreen = () => {
               styleRegisterScreen.boxPassword,
               styleRegisterScreen.boxBorder,
             ]}>
-            <Text>this is email {state.email} and pass {state.password}</Text>
+            <Text>
+              this is email {state.email} and pass {state.password}
+            </Text>
           </View>
           <View style={styleRegisterScreen.boxLinearFullname}>
             <View style={[styleRegisterScreen.boxFirstName]}>
@@ -176,13 +180,10 @@ const SignUpScreen = () => {
           </View>
           <TouchableOpacity
             style={styleRegisterScreen.boxSelectedDate}
-            onPress={() => {
-              
-            }}>
+            onPress={() => {}}>
             <Text style={styleRegisterScreen.boxGetTimeSelectedDate}>1</Text>
             <Text style={styleRegisterScreen.boxGetTimeSelectedDate}>2</Text>
             <Text style={styleRegisterScreen.boxGetTimeSelectedDate}>3</Text>
-            
           </TouchableOpacity>
           <View
             style={[
@@ -191,13 +192,15 @@ const SignUpScreen = () => {
             ]}>
             <TextInput />
           </View>
-            <TouchableOpacity style={styleRegisterScreen.boxButtonRegister} onPress={() => {
-              navigation.navigate("HomeScreen")
+          <TouchableOpacity
+            style={styleRegisterScreen.boxButtonRegister}
+            onPress={() => {
+              navigation.navigate('HomeScreen');
             }}>
-              <Text style={styleRegisterScreen.boxButtonRegisterContent}>
-                Register
-              </Text>
-            </TouchableOpacity>
+            <Text style={styleRegisterScreen.boxButtonRegisterContent}>
+              Register
+            </Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -295,18 +298,18 @@ const styleRegisterScreen = StyleSheet.create({
   },
   boxButtonRegister: {
     height: 50,
-    margin: "10%",
+    margin: '10%',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   boxButtonRegisterContent: {
     backgroundColor: 'black',
     borderRadius: 50,
-    paddingHorizontal: "10%",
+    paddingHorizontal: '10%',
     paddingVertical: '5%',
     color: 'white',
     fontSize: 20,
-  }
+  },
 });
 
 export default SignUpScreen;
