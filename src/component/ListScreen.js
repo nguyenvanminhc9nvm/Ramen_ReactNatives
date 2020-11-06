@@ -23,7 +23,7 @@ const ListScreen = (props) => {
   const renderItem = ({item}) => <Item text={item.name} id={item.id} />;
   const {dispatch} = props;
   const [state, setState] = React.useState({
-    idInput: '',
+    idInput: 0,
     nameInput: '',
   });
 

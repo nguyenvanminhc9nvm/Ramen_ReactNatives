@@ -9,13 +9,13 @@ export default function counterReducers(state = initialState, action) {
     case actions.ACTION_INCREMENT:
       return {
         ...state,
-        count: state.count + 1,
+        count: state.count + action.step,
       };
 
     case actions.ACTION_DECREMENT:
       return {
         ...state,
-        count: state.count - 1,
+        count: state.count - action.step,
       };
 
     default:

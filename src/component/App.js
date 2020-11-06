@@ -7,6 +7,7 @@ import SignUpScreen from './RegisterScreen';
 import HomeScreen from './HomeScreen';
 import AlertScreen from './AlertScreen';
 import ListScreen from './ListScreen';
+import StoreScreen from './StoresScreen';
 
 const Stack = createStackNavigator();
 
@@ -36,6 +37,7 @@ function App() {
         />
         <Stack.Screen name="AlertScreen" component={AlertScreen} />
         <Stack.Screen name="ListScreen" component={ListScreen} />
+        <Stack.Screen name="StoreScreen" component={StoreScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

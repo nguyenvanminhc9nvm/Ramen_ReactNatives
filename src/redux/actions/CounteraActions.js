@@ -1,5 +1,5 @@
-export const INCREMENT = "INCREMENT";
-export const DECREMENT = "DECREMENT";
+export const INCREMENT = 'INCREMENT';
+export const DECREMENT = 'DECREMENT';
 
 export const actions = {
   ACTION_INCREMENT: 'INCREMENT',
@@ -7,6 +7,6 @@ export const actions = {
 };
 
 export const actionCreators = {
-  increment: () => ({type: actions.ACTION_INCREMENT}),
-  decrement: () => ({type: actions.ACTION_DECREMENT}),
+  increment: (step) => ({type: actions.ACTION_INCREMENT, step: step}),
+  decrement: (step) => ({type: actions.ACTION_DECREMENT, step: step}),
 };

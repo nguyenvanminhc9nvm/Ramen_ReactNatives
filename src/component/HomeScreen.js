@@ -35,6 +35,18 @@ const HomeScreen = (props) => {
         }}
         title="List"
       />
+      <Button
+        onPress={() => {
+          navigation.navigate('StoreScreen');
+        }}
+        title="List Store"
+      />
+       <Button
+        onPress={() => {
+          navigation.navigate('CouterReduxSaga');
+        }}
+        title="Couter Redux Saga"
+      />
     </View>
   );
 };
